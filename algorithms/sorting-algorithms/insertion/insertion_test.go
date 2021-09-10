@@ -53,7 +53,7 @@ func TestInsertionLargeArray(t *testing.T) {
     }
 }
 func TestInsertionLargeArraysLargeValues(t *testing.T) {
-    want := GenerateRandomArray(100000,200000, false)
+    want := GenerateRandomArray(10000,20000, false)
     got := insertion(want)
 	sort.Ints(want)
     if !Equal(got,want) {
@@ -72,6 +72,15 @@ func TestInsertionLargeArrayNegativeValues(t *testing.T) {
     want := GenerateRandomArray(5,20, true)
     got := insertion(want)
 	sort.Ints(want)
+    if !Equal(got,want) {
+        t.Errorf("Insertion() = %v, want %v", got, want)
+    }
+}
+
+func TestInsertionSortedArray(t *testing.T) {
+    want := GenerateRandomArray(5,20, true)
+	sort.Ints(want)
+    got := insertion(want)
     if !Equal(got,want) {
         t.Errorf("Insertion() = %v, want %v", got, want)
     }
