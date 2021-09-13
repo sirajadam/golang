@@ -1,4 +1,4 @@
-package bubble
+package selection
 
 import (
 	"fmt"
@@ -22,30 +22,25 @@ func Equal(a, b []int) bool {
 }
 
 // Helper function to create random array of lenght len and 
-func GenerateRandomArray(len, max int, sign bool) []int {
+func GenerateRandomArray(len, max int) []int {
 	
 	rand.Seed(time.Now().Unix())
 	var randArr []int
 	for i := 0; i < len; i++ {
         value := rand.Intn(max) + 1
-        if sign {
-            value = -(rand.Intn(max) + 1)
-        } 
 	
 		randArr = append(randArr, value)
 	}
 	return randArr
 }
 
-
-func TestBubble(t *testing.T) {
-	want := GenerateRandomArray(5,20, false)
-	got := bubble(want)
+func TestSelectionSmallArray(t *testing.T) {
+    want := GenerateRandomArray(5,20)
+    got := selection(want)
 	sort.Ints(want)
-	if !Equal(got, want) {
-        t.Errorf("Bubble() = %v, want %v", got, want)
-	} else {
-		fmt.Printf("Bubble() = %v, want %v", got, want)
+    if !Equal(got,want) {
+        t.Errorf("Selection() = %v, want %v", got, want)
+    } else {
+		fmt.Printf("Selection() = %v, want %v", got, want)
 	}
-
 }
