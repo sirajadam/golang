@@ -6,4 +6,4 @@ This repo will mostly contain Algorithms and Data Structures written in Go
 
 # Why ?
 
-In my opinion, the best way to learn a programming language is to solve a problem and then compare your solution to alternative solutions that most of the time, atleast in the beginning, are better. Even though go is one of the fastest growing language today I noticed that the alternatives were very scarce even among popular sites like LeetCode and HackerRank. Therefore, I thought it would be a good idea to share my solutions here in GitHub .
+In my opinion, the best way to learn a programming language is to solve problems and afterward find alternative solutions to compare. Even though the Go programming language is one of the fastest-growing languages today, I noticed that these alternative solutions were limited in quantity, even among popular sites like LeetCode and HackerRank. For this reason, I thought it would be a good idea for me to share my solutions as one of these alternatives with other aspiring go developers. Hopefully, you find this helpful.
