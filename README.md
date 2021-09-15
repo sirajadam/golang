@@ -2,7 +2,7 @@
 
 # What ?
 
-This repo will mostly contain Algorithms and Data Structures
+This repo will mostly contain Algorithms and Data Structures written in Go
 
 # Why ?
 
