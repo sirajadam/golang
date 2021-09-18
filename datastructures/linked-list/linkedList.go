@@ -16,6 +16,7 @@ type Node struct {
 	next *Node
 }
 
+// printLinkedList prints the linkedlist in 
 func (l *LinkedList) printLinkedList() {
 	arr := []string{}
 	current := l.head
@@ -31,6 +32,7 @@ func (l *LinkedList) printLinkedList() {
 	fmt.Printf("head: %v \t tail: %v \t length: %v\n", l.head.data, l.tail.data, l.length)
 }
 
+// prepend adds new value at the head of the linkedlist
 func (l *LinkedList) prepend(val int) {
 
 	newNode := &Node{data:val}
@@ -46,6 +48,7 @@ func (l *LinkedList) prepend(val int) {
 	}
 }
 
+// append adds new value at the tail of the linkedlist - O(1)
 func (l *LinkedList) append(val int) {
 
 	newNode := &Node{data: val}
@@ -61,6 +64,7 @@ func (l *LinkedList) append(val int) {
 	}
 }
 
+//traverseToindex traverses to index index in the linkedlist - O(n)
 func (l *LinkedList) traverseToindex(index int) *Node{
 	prevNode := l.head
 	pos := 0
@@ -73,6 +77,7 @@ func (l *LinkedList) traverseToindex(index int) *Node{
 	return prevNode
 }
 
+// insert inserts value at index index in linked list at index - O(n)
 func (l *LinkedList) insert(index, value int) {
 
 	if index < 0 || index >= l.length {
@@ -99,8 +104,7 @@ func (l *LinkedList) insert(index, value int) {
 	l.length++
 }
 
-
-
+// remove removes the index in the linkedlist - O(n)
 func (l *LinkedList) remove(index int) {
 
 	if index < 0 || index >= l.length {
@@ -130,6 +134,7 @@ func (l *LinkedList) remove(index int) {
 	l.length--
 }
 
+// reverse reverses the linked list 
 func (l *LinkedList) reverse() {
 
 	if l.head.next == nil {
@@ -138,11 +143,8 @@ func (l *LinkedList) reverse() {
 
 	first := l.head
 	second := first.next
-	
-
-	 
+		 
 	for second != nil {
-
 		temp := second.next 
 		second.next = first
 		first = second 
@@ -155,28 +157,4 @@ func (l *LinkedList) reverse() {
 	
 } 
 
-func main() {
-
-	myLinkedList := LinkedList{}
-
-
-	// myLinkedList.prepend(5)
-	// myLinkedList.prepend(4)
-	// myLinkedList.prepend(3)
-	// myLinkedList.prepend(2)
-	// myLinkedList.prepend(1)
-	myLinkedList.append(4)
-	myLinkedList.append(5)
-	myLinkedList.append(6)
-	myLinkedList.prepend(2)
-	myLinkedList.prepend(1)
-	myLinkedList.prepend(0)
-	myLinkedList.insert(3,3)
-	myLinkedList.printLinkedList()
-	myLinkedList.remove(3)
-	fmt.Println("Removed index 3")
-	myLinkedList.printLinkedList()
-	myLinkedList.reverse()
-	myLinkedList.printLinkedList()
-
-}
+func main() {}
