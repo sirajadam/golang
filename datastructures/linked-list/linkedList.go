@@ -1,101 +1,182 @@
-package LinkedList
+package main
 
-import "fmt"
-
-type Node struct {
-	Data int
-	Next *Node
-}
+import (
+	"fmt"
+	"strings"
+)
 
 type LinkedList struct {
-	Head   *Node
-	Length int
+	head   *Node
+	tail   *Node
+	length int
 }
 
-func (list *LinkedList) Prepend(n *Node) {
-	second := list.Head
-	list.Head = n
-	n.Next = second
-	list.Length++
+type Node struct {
+	data int
+	next *Node
 }
 
-func (list *LinkedList) PrintLinkedListData() {
-	current := list.Head
+func (l *LinkedList) printLinkedList() {
+	arr := []string{}
+	current := l.head
 
 	for current != nil {
-		fmt.Printf("%v, ", current.Data)
-		current = current.Next
+
+		arr = append(arr, fmt.Sprint(current.data))
+		current = current.next
 	}
-	fmt.Println("")
+
+	str := strings.Join(arr, " --> ")
+	fmt.Println(str)
+	fmt.Printf("head: %v \t tail: %v \t length: %v\n", l.head.data, l.tail.data, l.length)
 }
 
-func (list *LinkedList) DeleteIndex(index int) {
-	if index >= list.Length {
-		fmt.Printf("IndexOutofBounds: Length of array %v, Index was: %v\n", list.Length, index )
+func (l *LinkedList) prepend(val int) {
+
+	newNode := &Node{data:val}
+
+	if l.length == 0 {
+		l.head = newNode
+		l.tail = newNode
+		l.length++
+	} else {
+		newNode.next = l.head
+		l.head = newNode
+		l.length++
+	}
+}
+
+func (l *LinkedList) append(val int) {
+
+	newNode := &Node{data: val}
+
+	if l.length == 0 {
+		l.head = newNode
+		l.tail = newNode
+		l.length++
+	} else {
+		l.tail.next = newNode
+		l.tail = newNode
+		l.length++
+	}
+}
+
+func (l *LinkedList) traverseToindex(index int) *Node{
+	prevNode := l.head
+	pos := 0
+
+	for pos < index {
+		prevNode = prevNode.next
+		pos++
+	}
+
+	return prevNode
+}
+
+func (l *LinkedList) insert(index, value int) {
+
+	if index < 0 || index >= l.length {
+		fmt.Println("Index out of bounds")
 		return
 	}
+
+	if index == l.length - 1 {
+		l.append(value)
+		return
+	}
+	
+	if index == 0 {
+		l.prepend(value)
+		return
+	}
+
+	newNode := &Node{data:value}
+	prevNode := l.traverseToindex(index-1)
+
+	nextNodeHolder := prevNode.next
+	prevNode.next = newNode
+	newNode.next = nextNodeHolder
+	l.length++
+}
+
+
+
+func (l *LinkedList) remove(index int) {
+
+	if index < 0 || index >= l.length {
+		fmt.Println("Index out of bounds")
+		return
+	}
+
 
 	if index == 0 {
-		list.Head = list.Head.Next
-		list.Length--
+		l.head = l.head.next
+		l.length--
 		return
 	}
 
-	prevDelete := list.Head
-
-	for i := 0; i < index - 1; i++ {
-		prevDelete = prevDelete.Next
+	if index == l.length - 1 {
+		prevNode := l.traverseToindex(index - 1)
+		prevNode.next = nil
+		l.tail = prevNode
+		l.length--
+		return
 	}
-	prevDelete.Next = prevDelete.Next.Next
-	list.Length--
+
+	
+	prevNode := l.traverseToindex(index - 1)
+	prevNode.next = prevNode.next.next
+
+	l.length--
 }
 
-// Deletes ONLY first element found with @value
-func (list *LinkedList) DeleteVal(value int) {
+func (l *LinkedList) reverse() {
 
-	if list.Length == 0 {
-		fmt.Println("Nothing to delete in Empty LinkedList")
+	if l.head.next == nil {
 		return
 	}
 
-	if list.Head.Data == value {
-		list.Head = list.Head.Next
-		list.Length--
-		return
+	first := l.head
+	second := first.next
+	
+
+	 
+	for second != nil {
+
+		temp := second.next 
+		second.next = first
+		first = second 
+		second = temp
 	}
 
-	prevDelete := list.Head
+	l.head.next = nil
+	l.head = first
 
-	for prevDelete.Next.Data != value {
-		if prevDelete.Next.Next == nil {
-			fmt.Println("Could not find value", value)
-			return
-		}
-		prevDelete = prevDelete.Next
-	}
-	prevDelete.Next = prevDelete.Next.Next
-	list.Length--
+	
+} 
+
+func main() {
+
+	myLinkedList := LinkedList{}
+
+
+	// myLinkedList.prepend(5)
+	// myLinkedList.prepend(4)
+	// myLinkedList.prepend(3)
+	// myLinkedList.prepend(2)
+	// myLinkedList.prepend(1)
+	myLinkedList.append(4)
+	myLinkedList.append(5)
+	myLinkedList.append(6)
+	myLinkedList.prepend(2)
+	myLinkedList.prepend(1)
+	myLinkedList.prepend(0)
+	myLinkedList.insert(3,3)
+	myLinkedList.printLinkedList()
+	myLinkedList.remove(3)
+	fmt.Println("Removed index 3")
+	myLinkedList.printLinkedList()
+	myLinkedList.reverse()
+	myLinkedList.printLinkedList()
+
 }
-
-// func main() {
-
-// 	// init empty linkedlist
-// 	listOne := LinkedList{}
-// 	// create 5 nodes
-// 	n5 := Node{5, nil}
-// 	n4 := Node{4, nil}
-// 	n3 := Node{3, nil}
-// 	n2 := Node{2, nil}
-// 	n1 := Node{1, nil}
-// 	// prepend n1-n5
-// 	listOne.prepend(&n5)
-// 	listOne.prepend(&n4)
-// 	listOne.prepend(&n3)
-// 	listOne.prepend(&n2)
-// 	listOne.prepend(&n1)
-
-// 	listOne.printLinkedListData()
-
-// 	// test out more methods
-
-// }
